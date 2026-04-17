@@ -38,4 +38,9 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Map<String, String>> handleEnumInvalido(HttpMessageNotReadableException ex) {
         return ResponseEntity.badRequest().body(Map.of("erro", "Valor inválido no corpo da requisição. Verifique os enums aceitos."));
     }
+
+    @ExceptionHandler(IaIndisponivelException.class)
+    public ResponseEntity<Map<String, String>> handleIaIndisponivel(IaIndisponivelException ex) {
+        return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(Map.of("erro", ex.getMessage()));
+    }
 }
