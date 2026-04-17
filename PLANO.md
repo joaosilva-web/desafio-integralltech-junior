@@ -11,33 +11,33 @@ API REST em **Java + Spring Boot** para gerenciamento de chamados de suporte té
 ## Checklist de Entrega
 
 ### Repositório e Documentação
-- [ ] Criar repositório público no GitHub: `desafio-integralltech-junior`
+- [x] Criar repositório público no GitHub: `desafio-integralltech-junior`
 - [ ] Escrever `README.md` com instruções de como rodar o projeto
 - [ ] Escrever `DECISOES.md` com as decisões técnicas tomadas e seus porquês
-- [ ] Commits semânticos ao longo do desenvolvimento (feat:, fix:, refactor:, etc.)
+- [x] Commits semânticos ao longo do desenvolvimento (feat:, fix:, refactor:, etc.)
 
 ---
 
 ## Parte 1 — API REST de Chamados (Obrigatório)
 
 ### Estrutura do Projeto Spring Boot
-- [ ] Criar projeto via Spring Initializr com:
+- [x] Criar projeto via Spring Initializr com:
   - Spring Web
   - Spring Data JPA
   - H2 Database
   - Validation (Bean Validation)
-- [ ] Organizar pacotes em camadas: `controller`, `service`, `repository`, `model`, `dto`, `exception`
+- [x] Organizar pacotes em camadas: `controller`, `service`, `repository`, `model`, `dto`, `exception`
 
 ### Entidade `Chamado`
-- [ ] `id` — Long, gerado automaticamente
-- [ ] `titulo` — String, obrigatório, mínimo 5 caracteres
-- [ ] `descricao` — String, obrigatório
-- [ ] `setor` — Enum: `TI`, `MANUTENCAO`, `RH`, `FINANCEIRO`
-- [ ] `prioridade` — Enum: `BAIXA`, `MEDIA`, `ALTA`, `CRITICA`
-- [ ] `status` — Enum: `ABERTO`, `EM_ATENDIMENTO`, `RESOLVIDO`, `CANCELADO`
-- [ ] `dataAbertura` — LocalDateTime, gerada automaticamente na criação
-- [ ] `dataFechamento` — LocalDateTime, preenchida ao RESOLVER ou CANCELAR
-- [ ] `solicitante` — String, obrigatório
+- [x] `id` — Long, gerado automaticamente
+- [x] `titulo` — String, obrigatório, mínimo 5 caracteres
+- [x] `descricao` — String, obrigatório
+- [x] `setor` — Enum: `TI`, `MANUTENCAO`, `RH`, `FINANCEIRO`
+- [x] `prioridade` — Enum: `BAIXA`, `MEDIA`, `ALTA`, `CRITICA`
+- [x] `status` — Enum: `ABERTO`, `EM_ATENDIMENTO`, `RESOLVIDO`, `CANCELADO`
+- [x] `dataAbertura` — LocalDateTime, gerada automaticamente na criação
+- [x] `dataFechamento` — LocalDateTime, preenchida ao RESOLVER ou CANCELAR
+- [x] `solicitante` — String, obrigatório
 
 ### Endpoints Obrigatórios
 
@@ -50,25 +50,25 @@ API REST em **Java + Spring Boot** para gerenciamento de chamados de suporte té
 | DELETE | `/api/chamados/{id}` | Cancelar (não deletar) um chamado |
 | GET | `/api/chamados/setor/{setor}` | Filtrar chamados por setor |
 
-- [ ] `POST /api/chamados` — retorna 201 Created
-- [ ] `GET /api/chamados` — retorna lista de chamados
-- [ ] `GET /api/chamados/{id}` — retorna 404 se não encontrado
-- [ ] `PUT /api/chamados/{id}` — atualiza campos permitidos
-- [ ] `DELETE /api/chamados/{id}` — muda status para CANCELADO + preenche dataFechamento
-- [ ] `GET /api/chamados/setor/{setor}` — filtra por setor
+- [x] `POST /api/chamados` — retorna 201 Created
+- [x] `GET /api/chamados` — retorna lista de chamados
+- [x] `GET /api/chamados/{id}` — retorna 404 se não encontrado
+- [x] `PUT /api/chamados/{id}` — atualiza campos permitidos
+- [x] `DELETE /api/chamados/{id}` — muda status para CANCELADO + preenche dataFechamento
+- [x] `GET /api/chamados/setor/{setor}` — filtra por setor
 
 ### Regras de Negócio
-- [ ] Todo chamado nasce com status `ABERTO`
-- [ ] DELETE não remove do banco — apenas cancela
-- [ ] Não é possível reabrir chamado `CANCELADO` ou `RESOLVIDO`
-- [ ] Ao mudar status para `RESOLVIDO` ou `CANCELADO`, preencher `dataFechamento`
-- [ ] Validações retornam mensagens claras com HTTP adequado (400, 404, 409, etc.)
+- [x] Todo chamado nasce com status `ABERTO`
+- [x] DELETE não remove do banco — apenas cancela
+- [x] Não é possível reabrir chamado `CANCELADO` ou `RESOLVIDO`
+- [x] Ao mudar status para `RESOLVIDO` ou `CANCELADO`, preencher `dataFechamento`
+- [x] Validações retornam mensagens claras com HTTP adequado (400, 404, 409, etc.)
 
 ### Tratamento de Erros
-- [ ] Handler global com `@ControllerAdvice`
-- [ ] Retornar `{ "erros": [...] }` para erros de validação (400)
-- [ ] Retornar mensagem clara para 404 (chamado não encontrado)
-- [ ] Tratar enum inválido no request
+- [x] Handler global com `@ControllerAdvice`
+- [x] Retornar `{ "erros": [...] }` para erros de validação (400)
+- [x] Retornar mensagem clara para 404 (chamado não encontrado)
+- [x] Tratar enum inválido no request
 
 ---
 
@@ -80,17 +80,17 @@ API REST em **Java + Spring Boot** para gerenciamento de chamados de suporte té
 |--------|------|-----------|
 | POST | `/api/chamados/{id}/analisar` | Enviar chamado para análise por IA |
 
-- [ ] Buscar chamado pelo ID
-- [ ] Montar prompt com título e descrição do chamado
+- [x] Buscar chamado pelo ID
+- [x] Montar prompt com título e descrição do chamado
 - [ ] Chamar API de IA (Claude API via `claude-sonnet-4-6` ou Groq como alternativa gratuita)
-- [ ] Parsear resposta da IA e extrair:
+- [x] Parsear resposta da IA e extrair:
   - `prioridadeSugerida` (BAIXA/MEDIA/ALTA/CRITICA)
   - `setorSugerido` (TI/MANUTENCAO/RH/FINANCEIRO)
   - `resumo` (até 2 frases)
-- [ ] Retornar `AnaliseResponseDTO` com os campos acima + `chamadoId` + `analisadoEm`
-- [ ] **Não alterar** o chamado original automaticamente
+- [x] Retornar `AnaliseResponseDTO` com os campos acima + `chamadoId` + `analisadoEm`
+- [x] **Não alterar** o chamado original automaticamente
 - [ ] Tratar falha na API de IA (timeout, indisponibilidade) com mensagem adequada
-- [ ] Tratar caso em que IA retorne valor fora do enum
+- [x] Tratar caso em que IA retorne valor fora do enum
 
 ### Estrutura do Response de Análise
 ```json
@@ -115,10 +115,10 @@ API REST em **Java + Spring Boot** para gerenciamento de chamados de suporte té
 
 ---
 
-## Arquitetura Proposta
+## Arquitetura Implementada
 
 ```
-src/main/java/com/joao/chamados/
+src/main/java/com/integralltech/chamados/
 ├── controller/
 │   └── ChamadoController.java
 ├── service/
@@ -138,21 +138,22 @@ src/main/java/com/joao/chamados/
 │   └── AnaliseResponseDTO.java
 └── exception/
     ├── GlobalExceptionHandler.java
-    └── ChamadoNaoEncontradoException.java
+    ├── ChamadoNaoEncontradoException.java
+    └── ChamadoFechadoException.java
 ```
 
 ---
 
 ## Ordem de Desenvolvimento
 
-1. Criar projeto Spring Boot e configurar H2
-2. Criar enums e entidade `Chamado`
-3. Criar repository e service básico (CRUD)
-4. Criar controller com os 6 endpoints
-5. Implementar regras de negócio no service
-6. Implementar tratamento de erros global
-7. Implementar integração com IA (serviço separado)
-8. Criar endpoint `/analisar`
+1. ~~Criar projeto Spring Boot e configurar H2~~ ✅
+2. ~~Criar enums e entidade `Chamado`~~ ✅
+3. ~~Criar repository e service básico (CRUD)~~ ✅
+4. ~~Criar controller com os 6 endpoints~~ ✅
+5. ~~Implementar regras de negócio no service~~ ✅
+6. ~~Implementar tratamento de erros global~~ ✅
+7. Implementar chamada real à API de IA
+8. ~~Criar estrutura do endpoint `/analisar`~~ ✅
 9. Testar todos os endpoints manualmente
 10. Escrever README.md e DECISOES.md
 11. [Bônus] Criar frontend React
