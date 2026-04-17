@@ -4,11 +4,9 @@ import com.integralltech.chamados.model.Chamado;
 import com.integralltech.chamados.model.enums.Prioridade;
 import com.integralltech.chamados.model.enums.Setor;
 import com.integralltech.chamados.model.enums.Status;
-import lombok.Getter;
 
 import java.time.LocalDateTime;
 
-@Getter
 public class ChamadoResponseDTO {
 
     private final Long id;
@@ -32,4 +30,14 @@ public class ChamadoResponseDTO {
         this.dataFechamento = chamado.getDataFechamento();
         this.solicitante = chamado.getSolicitante();
     }
+
+    public Long getId() { return id; }
+    public String getTitulo() { return titulo; }
+    public String getDescricao() { return descricao; }
+    public Setor getSetor() { return setor; }
+    public Prioridade getPrioridade() { return prioridade; }
+    public Status getStatus() { return status; }
+    public LocalDateTime getDataAbertura() { return dataAbertura; }
+    public LocalDateTime getDataFechamento() { return dataFechamento; }
+    public String getSolicitante() { return solicitante; }
 }
