@@ -5,11 +5,7 @@ import com.integralltech.chamados.model.enums.Setor;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.Getter;
-import lombok.Setter;
 
-@Getter
-@Setter
 public class ChamadoRequestDTO {
 
     @NotBlank(message = "titulo: campo obrigatorio")
@@ -27,4 +23,19 @@ public class ChamadoRequestDTO {
 
     @NotBlank(message = "solicitante: campo obrigatorio")
     private String solicitante;
+
+    public String getTitulo() { return titulo; }
+    public void setTitulo(String titulo) { this.titulo = titulo; }
+
+    public String getDescricao() { return descricao; }
+    public void setDescricao(String descricao) { this.descricao = descricao; }
+
+    public Setor getSetor() { return setor; }
+    public void setSetor(Setor setor) { this.setor = setor; }
+
+    public Prioridade getPrioridade() { return prioridade; }
+    public void setPrioridade(Prioridade prioridade) { this.prioridade = prioridade; }
+
+    public String getSolicitante() { return solicitante; }
+    public void setSolicitante(String solicitante) { this.solicitante = solicitante; }
 }
