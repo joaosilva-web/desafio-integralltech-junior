@@ -7,6 +7,7 @@ Projeto desenvolvido como desafio técnico para o processo seletivo da **IntegrA
 
 ## Tecnologias
 
+**Back-end**
 - Java 21
 - Spring Boot 3.2.5
 - Spring Data JPA
@@ -14,18 +15,29 @@ Projeto desenvolvido como desafio técnico para o processo seletivo da **IntegrA
 - H2 Database (banco em memória)
 - Maven
 
+**Front-end**
+- React 19
+- Vite
+- CSS puro (sem biblioteca de UI)
+
+**Integração**
+- Groq API (modelo `llama-3.3-70b-versatile`)
+
 ---
 
 ## Pré-requisitos
 
 - [Java 21+](https://adoptium.net/) instalado
 - Maven instalado **ou** usar o wrapper incluído (`mvnw`)
+- [Node.js 18+](https://nodejs.org/) instalado (para o front-end)
+- Chave de API do [Groq](https://console.groq.com) (gratuita)
 
 Verifique suas versões:
 
 ```bash
 java --version
 mvn --version
+node --version
 ```
 
 ---
@@ -39,35 +51,54 @@ git clone https://github.com/joaosilva-web/desafio-integralltech-junior.git
 cd desafio-integralltech-junior
 ```
 
-### 2. Execute a aplicação
+### 2. Configure a chave da API de IA
+
+Crie o arquivo `src/main/resources/application-local.properties` com sua chave do Groq:
+
+```properties
+groq.api.key=SUA_CHAVE_AQUI
+```
+
+> Obtenha sua chave gratuitamente em [console.groq.com](https://console.groq.com) → API Keys → Create API Key
+
+### 3. Rode o back-end
 
 **Com Maven instalado:**
 ```bash
-mvn spring-boot:run
+mvn spring-boot:run -Dspring-boot.run.profiles=local
 ```
 
 **Com o wrapper (sem Maven instalado):**
 ```bash
 # Linux / macOS
-./mvnw spring-boot:run
+./mvnw spring-boot:run -Dspring-boot.run.profiles=local
 
 # Windows
-mvnw.cmd spring-boot:run
+mvnw.cmd spring-boot:run -Dspring-boot.run.profiles=local
 ```
 
-### 3. Acesse a API
-
-A aplicação sobe na porta `8080`:
-
-```
-http://localhost:8080
-```
-
-**Console H2** (banco em memória, para inspecionar os dados):
+A API sobe na porta `8080`. Console H2 disponível em:
 ```
 http://localhost:8080/h2-console
 ```
 > JDBC URL: `jdbc:h2:mem:chamadosdb` | Usuário: `sa` | Senha: *(vazio)*
+
+### 4. Rode o front-end
+
+Em outro terminal:
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+O front-end sobe na porta `5173`:
+```
+http://localhost:5173
+```
+
+> O Vite possui um proxy configurado — todas as chamadas para `/api` são redirecionadas automaticamente para `http://localhost:8080`. O back-end precisa estar rodando.
 
 ---
 
@@ -243,28 +274,39 @@ curl -X POST http://localhost:8080/api/chamados/1/analisar
 ## Estrutura do projeto
 
 ```
-src/main/java/com/integralltech/chamados/
-├── controller/         # Recebe as requisições HTTP
-│   └── ChamadoController.java
-├── service/            # Regras de negócio
-│   ├── ChamadoService.java
-│   └── IaAnaliseService.java
-├── repository/         # Acesso ao banco de dados
-│   └── ChamadoRepository.java
-├── model/              # Entidade JPA
-│   ├── Chamado.java
-│   └── enums/
-│       ├── Setor.java
-│       ├── Prioridade.java
-│       └── Status.java
-├── dto/                # Objetos de transferência de dados
-│   ├── ChamadoRequestDTO.java
-│   ├── ChamadoResponseDTO.java
-│   └── AnaliseResponseDTO.java
-└── exception/          # Tratamento de erros
-    ├── GlobalExceptionHandler.java
-    ├── ChamadoNaoEncontradoException.java
-    └── ChamadoFechadoException.java
+desafio-integralltech-junior/
+│
+├── src/main/java/com/integralltech/chamados/
+│   ├── controller/         # Recebe as requisições HTTP
+│   │   └── ChamadoController.java
+│   ├── service/            # Regras de negócio
+│   │   ├── ChamadoService.java
+│   │   └── IaAnaliseService.java
+│   ├── repository/         # Acesso ao banco de dados
+│   │   └── ChamadoRepository.java
+│   ├── model/              # Entidade JPA
+│   │   ├── Chamado.java
+│   │   └── enums/
+│   │       ├── Setor.java
+│   │       ├── Prioridade.java
+│   │       └── Status.java
+│   ├── dto/                # Objetos de transferência de dados
+│   │   ├── ChamadoRequestDTO.java
+│   │   ├── ChamadoResponseDTO.java
+│   │   └── AnaliseResponseDTO.java
+│   └── exception/          # Tratamento de erros
+│       ├── GlobalExceptionHandler.java
+│       ├── ChamadoNaoEncontradoException.java
+│       ├── ChamadoFechadoException.java
+│       └── IaIndisponivelException.java
+│
+└── frontend/               # Interface React (bônus)
+    └── src/
+        ├── App.jsx          # Componente raiz com estado global
+        └── components/
+            ├── ChamadoList.jsx   # Tabela de chamados
+            ├── ChamadoForm.jsx   # Formulário de criação
+            └── AnaliseModal.jsx  # Modal com resultado da IA
 ```
 
 ---
